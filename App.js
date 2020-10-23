@@ -1,26 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Firebase from './firebase'
-
-export default function App() {
-
-  console.log(Firebase.auth())
+// import 'react-native-gesture-handler';
+import React, { useState, useMemo, createContext } from 'react';
+// import { SplashScreen } from 'expo';
+import firebase from './firebase';
+import SignUpScreen from './SignUpScreen';
+import LandingPage from './LandingPage';
 
 
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+
+
+// console.disableYellowBox = true;
+
+// SplashScreen.preventAutoHide();
+// setTimeout(SplashScreen.hide, 3500);
+
+export const AuthContext = createContext()
+
+export default () => {
+
+  const auth = firebase.auth();
+  let [ loggedIn, setLoggedIn ] = useState(false);
+  
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
+  
+  const authContext = useMemo(() => {
+  return {
+    updateUser: () => {
+      const user = firebase.auth().currentUser;
+      setLoggedIn(true);
+    }
+  };
+}, []);
+
+
+const user = firebase.auth().currentUser;
+return (
+   
+  <AuthContext.Provider value={authContext}>
+    {loggedIn && <LandingPage/>} 
+    {!loggedIn && <SignUpScreen/>} 
+  </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
