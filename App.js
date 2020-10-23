@@ -2,8 +2,8 @@
 import React, { useState, useMemo, createContext } from 'react';
 // import { SplashScreen } from 'expo';
 import firebase from './firebase';
-import SignUpScreen from './SignUpScreen';
-import LandingPage from './LandingPage';
+import AuthStack from './navigation/stacks/AuthStack'
+import LandingPage from './screens/LandingPage';
 
 
 
@@ -43,7 +43,7 @@ return (
    
   <AuthContext.Provider value={authContext}>
     {loggedIn && <LandingPage/>} 
-    {!loggedIn && <SignUpScreen/>} 
+    {!loggedIn && <AuthStack/>} 
   </AuthContext.Provider>
   );
 }
