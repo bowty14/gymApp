@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions} from 'react-native';
 // import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import firebase from './firebase'
+import firebase from '../../firebase'
+const windowHeight = Dimensions.get('window').height;
 
 function SignUpScreen() {
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#000000",
     width: "100%",
-    // height: windowHeight,
+    height: windowHeight,
   },
   input: {
     backgroundColor: "#566573",
